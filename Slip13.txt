@@ -1,0 +1,120 @@
+1)
+
+// Volt interface representing volts
+interface Volt {
+    int getVolts();
+}
+
+// Socket class producing constant volts of 120V
+class Socket {
+    public int getVolts() {
+        return 120;
+    }
+}
+
+// VoltAdapter class implementing Volt interface and adapting Socket to Volt
+class VoltAdapter extends Socket implements Volt {
+    @Override
+    public int getVolts() {
+        return super.getVolts(); // Simply use the existing Socket method
+    }
+
+    // Additional methods for 3 volts and 12 volts
+    public int get3Volts() {
+        return 3;
+    }
+
+    public int get12Volts() {
+        return 12;
+    }
+}
+
+// MobileCharger class (client) using Volt interface
+class MobileCharger {
+    public void charge(Volt volt) {
+        System.out.println("Charging with " + volt.getVolts() + " volts");
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        // Create an instance of MobileCharger
+        MobileCharger mobileCharger = new MobileCharger();
+
+        // Create an instance of VoltAdapter
+        VoltAdapter voltAdapter = new VoltAdapter();
+
+        // Charge using default 120 volts
+        mobileCharger.charge(voltAdapter);
+
+        // Charge using 3 volts
+        mobileCharger.charge(() -> voltAdapter.get3Volts());
+
+        // Charge using 12 volts
+        mobileCharger.charge(() -> voltAdapter.get12Volts());
+    }
+}
+
+
+2)
+
+import matplotlib.pyplot as plt
+import pandas as pd
+iris_df = pd.read_csv('data.csv')
+iris_df
+data =iris_df[['SepalLengthCm','SepalWidthCm']].values
+target = iris_df['Species'].values
+target_name = iris_df['Species'].unique()
+target_name
+plt.figure(figsize=(8,6))
+for target_value in target_name:
+    plt.scatter(data[target == target_value,0],
+                data[target == target_value,1],
+                label=target_value)
+
+3)
+
+html-
+<html>
+<head>
+<title>User login page</title>
+<head>
+    <script>
+          function f(){
+                var validRegex =/^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
+                var email=document.getElementById("email").value;
+                if(!validRegex.test(email))
+                    alert("Invalid Email!");
+                 else 
+                    alert("submitted succesfully");
+                return false;
+         }
+    </script>
+</head>
+<body>
+    <form name="login" onsubmit="f()">
+    <h1>Login here</h1>
+    email id:<input type="text" id="email"/><br><br>
+    password:<input type="password" id="password"><br><br>
+    <input type="submit" id="submit" value="submit">
+    </form>
+</body>
+</html>
+
+javascript-
+var http=require('http');
+http.createServer(function(req,resp){
+    var fs=require("fs");
+    resp.writeHead(200,{'content-type':'text/html'});
+     var content= fs.readFileSync("login.html");
+         if(content){
+       
+         resp.write(content);
+         }
+         else{
+            resp.write("404 error");
+         }
+        
+    resp.end();
+}).listen(6006);

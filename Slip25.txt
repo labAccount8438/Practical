@@ -1,0 +1,48 @@
+Q1 Write a Java Program to implement Singleton pattern for multithreading.
+class SingleObject 
+{
+	private static SingleObject instance = new SingleObject();
+	
+	private SingleObject(){}
+
+   //Get the only object available
+   public static SingleObject getInstance(){
+      return instance;
+   }
+
+   public void showMessage(){
+      System.out.println("Hello Everyone!!!!");
+   }
+}
+ class singletone{
+   public static void main(String[] args) {
+      //Get the only object available
+      SingleObject object = SingleObject.getInstance();
+      object.showMessage();
+   }
+}
+2) Write a python program to Implement Simple Linear Regression for predicting house price.   
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+ps=pd.read_csv("Housing.csv")
+df = ps[['area', 'price']]
+df.sample(5)
+
+plt.scatter(df.area,df.price,color='red',marker='+')
+In_v=df.drop('price',axis='columns')
+In_v
+model=linear_model.LinearRegression()
+model.fit(In_v,df.price)
+model.predict([[6720]])
+
+
+3) Create a Simple Web Server using node js. 	 	
+var http = require('http'); // 1 - Import Node.js core module
+var server = http.createServer(function (req, res) {   // 2 - creating server
+    //handle incomming requests here..
+});
+server.listen(5000); //3 - listen for any incoming requests
+console.log('Node.js web server at port 5000 is running..')
+

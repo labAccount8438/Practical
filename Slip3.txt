@@ -1,0 +1,119 @@
+1)
+
+import java.util.Observable;
+
+class WeatherData extends Observable {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    public void measurementsChanged() {
+        setChanged();
+        notifyObservers();
+    }
+
+    public void setMeasurements(float temperature, float humidity, float pressure) {
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.pressure = pressure;
+        measurementsChanged();
+    }
+
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public float getPressure() {
+        return pressure;
+    }
+}
+
+class WeatherObserver implements java.util.Observer {
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof WeatherData) {
+            WeatherData weatherData = (WeatherData) o;
+            float temperature = weatherData.getTemperature();
+            float humidity = weatherData.getHumidity();
+            float pressure = weatherData.getPressure();
+            
+            System.out.println("Temperature: " + temperature + "°C");
+            System.out.println("Humidity: " + humidity + "%");
+            System.out.println("Pressure: " + pressure + "hPa");
+        }
+    }
+}
+
+public class WeatherStation {
+    public static void main(String[] args) {
+        WeatherData weatherData = new WeatherData();
+        WeatherObserver weatherObserver = new WeatherObserver();
+
+        weatherData.addObserver(weatherObserver);
+
+        // Simulate weather changes
+        weatherData.setMeasurements(25.5f, 60.0f, 1013.2f);
+        weatherData.setMeasurements(26.0f, 55.5f, 1012.5f);
+    }
+}
+
+2)
+
+from sklearn.preprocessing import LabelEncoder
+import pandas as pd
+df = pd.read_csv("forestfires.csv")
+df.sample(5)
+label_encoder = LabelEncoder()
+df["Numneric_month"] = label_encoder.fit_transform(df["month"])
+df["Numneric_day"] = label_encoder.fit_transform(df["day"])
+df.sample(5)
+df.to_csv('encoded_dataset.csv', index=False)
+df
+
+3)
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    </style>
+</head>
+<body>
+<script>
+function validateform(){  
+var email = document.getElementById("email").value;
+var password = document.getElementById("psw").value;
+if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+  {
+    alert("Valid Email Id..")
+    return (true)
+  }
+   else{ alert("You have entered an invalid email address!")
+    return (false)
+   }
+}  
+</script>
+<form name="myform" onsubmit="return validateform()">
+  <div class="container">
+  
+    <p>Please fill in this form to Login.</p>
+    <hr>
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" autocomplete="off" placeholder="Enter Email" name="email" id="email" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" autocomplete="off" placeholder="Enter Password" name="psw" id="psw" required>
+
+    <hr>
+    <button type="submit" class="registerbtn">Register</button>
+  </div>
+  
+</form>
+
+</body>
+</html>

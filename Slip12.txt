@@ -1,0 +1,96 @@
+1)
+
+// Car interface
+interface Car {
+    void assemble();
+}
+
+// BasicCar class implementing the Car interface
+class BasicCar implements Car {
+    @Override
+    public void assemble() {
+        System.out.println("Basic Car");
+    }
+}
+
+// CarDecorator class implementing the Car interface and acting as a base decorator
+abstract class CarDecorator implements Car {
+    protected Car car;
+
+    public CarDecorator(Car car) {
+        this.car = car;
+    }
+
+    @Override
+    public void assemble() {
+        car.assemble();
+    }
+}
+
+// SportsCar class, a concrete decorator extending CarDecorator
+class SportsCar extends CarDecorator {
+    public SportsCar(Car car) {
+        super(car);
+    }
+
+    @Override
+    public void assemble() {
+        super.assemble();
+        System.out.println("Adding features for Sports Car");
+    }
+}
+
+// LuxuryCar class, another concrete decorator extending CarDecorator
+class LuxuryCar extends CarDecorator {
+    public LuxuryCar(Car car) {
+        super(car);
+    }
+
+    @Override
+    public void assemble() {
+        super.assemble();
+        System.out.println("Adding features for Luxury Car");
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        // Create a BasicCar
+        Car basicCar = new BasicCar();
+        System.out.println("Basic Car:");
+        basicCar.assemble();
+
+        System.out.println("\nSports Car:");
+        // Decorate the BasicCar with SportsCar features
+        Car sportsCar = new SportsCar(new BasicCar());
+        sportsCar.assemble();
+
+        System.out.println("\nLuxury Car:");
+        // Decorate the BasicCar with LuxuryCar features
+        Car luxuryCar = new LuxuryCar(new BasicCar());
+        luxuryCar.assemble();
+    }
+}
+
+2)
+
+
+from sklearn.preprocessing import LabelEncoder
+import pandas as pd
+df = pd.read_csv("forestfires.csv")
+df.sample(5)
+label_encoder = LabelEncoder()
+df["Numneric_month"] = label_encoder.fit_transform(df["month"])
+df["Numneric_day"] = label_encoder.fit_transform(df["day"])
+df.sample(5)
+df.to_csv('encoded_dataset.csv', index=False)
+df
+
+3)
+
+var http = require('http');
+var server = http.createServer(function (req, res) {
+    res.write("<h1>Server Created!</h1>");
+});
+server.listen(8080);

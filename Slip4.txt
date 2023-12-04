@@ -1,0 +1,116 @@
+1)
+
+
+ class Pizza  {
+   String name;
+    
+    void prepare() {
+        System.out.println("Preparing " + name + " pizza...");
+    }
+
+    void bake() {
+        System.out.println("Baking " + name + " pizza...");
+    }
+
+    void cut() {
+        System.out.println("Cutting " + name + " pizza...");
+    }
+
+    void box() {
+        System.out.println("Boxing " + name + " pizza...");
+    }
+}
+
+
+class NyStyleCheesePizza extends Pizza {
+    NyStyleCheesePizza() {
+        name = "NY Style Cheese Pizza";
+    }
+}
+
+class ChicagoStyleCheesePizza extends Pizza {
+    ChicagoStyleCheesePizza() {
+        name = "Chicago Style Cheese Pizza";
+    }
+}
+
+// PizzaStore class (Creator)
+abstract class PizzaStore {
+    abstract Pizza createPizza(String type);
+
+    Pizza orderPizza(String type) {
+        Pizza pizza = createPizza(type);
+
+        pizza.prepare();
+        pizza.bake();
+        pizza.cut();
+        pizza.box();
+
+        return pizza;
+    }
+}
+
+// Concrete PizzaStore classes
+class NyPizzaStore extends PizzaStore {
+    @Override
+    Pizza createPizza(String type) {
+        if (type.equals("cheese")) {
+            return new NyStyleCheesePizza();
+        }
+        return null;
+    }
+}
+
+class ChicagoPizzaStore extends PizzaStore {
+    @Override
+    Pizza createPizza(String type) {
+        if (type.equals("cheese")) {
+            return new ChicagoStyleCheesePizza();
+        }
+        return null;
+    }
+}
+
+// Main class
+public class PizzaFactory {
+    public static void main(String[] args) {
+        PizzaStore nyPizzaStore = new NyPizzaStore();
+        PizzaStore chicagoPizzaStore = new ChicagoPizzaStore();
+
+        System.out.println();
+        
+        Pizza nyCheesePizza = nyPizzaStore.orderPizza("cheese");
+        System.out.println("Ordered a " + nyCheesePizza.name);
+
+        System.out.println();
+
+        Pizza chicagoCheesePizza = chicagoPizzaStore.orderPizza("cheese");
+        System.out.println("Ordered a " + chicagoCheesePizza.name);
+    }
+}
+
+
+2)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+ps=pd.read_csv("Housing.csv")
+df = ps[['area', 'price']]
+df.sample(5)
+plt.scatter(df.area,df.price,color='red',marker='+')
+In_v=df.drop('price',axis='columns')
+In_v
+model=linear_model.LinearRegression()
+model.fit(In_v,df.price)
+model.predict([[6720]])
+
+3)
+
+var http = require('http');
+var uc = require('upper-case');
+http.createServer(function (req, res){
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(uc.upperCase("hello world..!!!"));
+    res.end();
+}).listen(8080);

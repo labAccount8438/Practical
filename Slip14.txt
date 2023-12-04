@@ -1,0 +1,107 @@
+1)
+
+// Command interface
+interface Command {
+    void execute();
+}
+
+// Receiver class - Light
+class Light {
+    void turnOn() {
+        System.out.println("Light is ON");
+    }
+
+    void turnOff() {
+        System.out.println("Light is OFF");
+    }
+}
+
+// Concrete Command - LightOnCommand
+class LightOnCommand implements Command {
+    private Light light;
+
+    LightOnCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.turnOn();
+    }
+}
+
+// Concrete Command - LightOffCommand
+class LightOffCommand implements Command {
+    private Light light;
+
+    LightOffCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.turnOff();
+    }
+}
+
+// Invoker class
+class RemoteControl {
+    private Command command;
+
+    void setCommand(Command command) {
+        this.command = command;
+    }
+
+    void pressButton() {
+        command.execute();
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        Light livingRoomLight = new Light();
+
+        Command lightOnCommand = new LightOnCommand(livingRoomLight);
+        Command lightOffCommand = new LightOffCommand(livingRoomLight);
+
+        RemoteControl remote = new RemoteControl();
+
+        remote.setCommand(lightOnCommand);
+        remote.pressButton();
+
+        remote.setCommand(lightOffCommand);
+        remote.pressButton();
+    }
+}
+
+
+2)
+
+import pandas as pd
+df = pd.read_csv("forestfires.csv")
+df
+null = df.isnull()
+null
+
+df = df.dropna()
+df
+
+df.to_csv('cleaned_dataset.csv', index=False)
+df
+
+
+3)
+
+var express = require('express');
+var app = express();
+var PORT = 3000;
+  
+app.get('/', function(req, res){
+    res.download('hello.txt');
+});
+  
+app.listen(PORT, function(err){
+    if (err) console.log(err);
+    console.log("Server listening on PORT", PORT);
+});

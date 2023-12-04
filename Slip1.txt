@@ -1,0 +1,101 @@
+1)
+
+
+import java.io.IOException;
+import java.io.InputStream;
+
+class LowercaseDecoratorInputStream extends InputStream {
+    private InputStream in;
+
+    protected LowercaseDecoratorInputStream(InputStream in) {
+        this.in = in;
+    }
+
+    @Override
+    public int read() throws IOException {
+        int data = in.read();
+        if (data != -1) {
+            // Convert uppercase to lowercase
+            return Character.toLowerCase((char) data);
+        }
+        return -1;
+    }
+}
+
+public class javaMongo {
+    public static void main(String[] args) {
+        try {
+            System.out.println("Enter text (Ctrl+Z or Ctrl+D to finish):");
+
+            LowercaseDecoratorInputStream lowercaseDecoratorInputStream = new LowercaseDecoratorInputStream(System.in);
+
+            int data;
+            while ((data = lowercaseDecoratorInputStream.read()) != -1) {
+                // Print the lowercase data to the console
+                System.out.print((char) data);
+            }
+
+            // Close the stream
+            lowercaseDecoratorInputStream.close();
+
+            System.out.println("\nConversion completed successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+2)
+
+import matplotlib.pyplot as plt
+import pandas as pd
+iris_df = pd.read_csv('data.csv')
+iris_df
+data =iris_df[['SepalLengthCm','SepalWidthCm']].values
+target = iris_df['Species'].values
+target_name = iris_df['Species'].unique()
+target_name
+plt.figure(figsize=(8,6))
+for target_value in target_name:
+    plt.scatter(data[target == target_value,0],
+                data[target == target_value,1],
+                label=target_value)
+
+
+3)
+
+<html>
+<head>
+    <script type="text/javascript">
+        function validateStudent(){
+            var regName = /^[a-zA-z]+[a-zA-Z]+$/;
+            var fname = document.getElementById('fsname').value;
+            var lname = document.getElementById('lsname').value;
+            var age = document.getElementById('age').value;
+            var phone = document.getElementById('phone').value;
+            
+            if(age<18 || age>50)
+                alert("student age must be 18 to 50");
+            if(!regName.test(fname))
+                alert("invalid name");
+            if(!regName.test(lname))
+                alert("invalid name");
+        }
+    </script>
+</head>
+<body>
+    <form>
+        <h1>Student Form :</h1>
+        student first name :
+        <input type="text" name="fsname" id="fsname"><br>
+        student last name :
+        <input type="text" name="lname" id="lsname"><br>
+        student age :
+        <input type="text" name="age" id="age"><br>
+        student mobile :
+        <input type="text" name="phone" id="phone"><br>
+        <input type="button" value="validate" onclick="validateStudent()">
+    </form>
+</body>
+</html> 

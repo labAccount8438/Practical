@@ -1,0 +1,151 @@
+1)
+
+// Command interface
+interface Command {
+    void execute();
+}
+
+// Concrete Command for turning the light on
+class LightOnCommand implements Command {
+    private Light light;
+
+    public LightOnCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.turnOn();
+    }
+}
+
+// Concrete Command for turning the light off
+class LightOffCommand implements Command {
+    private Light light;
+
+    public LightOffCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.turnOff();
+    }
+}
+
+// Receiver
+class Light {
+    public void turnOn() {
+        System.out.println("Light is ON");
+    }
+
+    public void turnOff() {
+        System.out.println("Light is OFF");
+    }
+}
+
+// Invoker
+class RemoteControl {
+    private Command command;
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
+    public void pressButton() {
+        command.execute();
+    }
+}
+
+// Client code
+public class test {
+    public static void main(String[] args) {
+        // Create instances of the light and corresponding commands
+        Light livingRoomLight = new Light();
+        LightOnCommand livingRoomLightOn = new LightOnCommand(livingRoomLight);
+        LightOffCommand livingRoomLightOff = new LightOffCommand(livingRoomLight);
+
+        // Create a remote control and set the commands
+        RemoteControl remoteControl = new RemoteControl();
+        remoteControl.setCommand(livingRoomLightOn);
+
+        // Press the button to turn the light on
+        remoteControl.pressButton();
+
+        // Set a different command and press the button to turn the light off
+        remoteControl.setCommand(livingRoomLightOff);
+        remoteControl.pressButton();
+    }
+}
+
+2)
+
+import pandas as pd
+import matplotlib .pyplot as plt
+df= pd.read_csv('Salary.csv')
+df
+plt.scatter(df['YearsExperience'],df['Salary'])
+x= df.iloc[:,1:-1].values
+y= df.iloc[:,-1].values
+x
+y
+from sklearn.preprocessing import PolynomialFeatures
+poly =PolynomialFeatures(degree=3)
+x_poly = poly.fit_transform(x)
+x_poly
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(x_poly,y)
+plt.scatter(x,y)
+plt.plot(x,model.predict(poly.fit_transform(x)))
+model.predict(poly.fit_transform([[6]]))
+
+3)
+
+var fs = require('fs');
+//var http = require('http');
+//http.createServer(function (req, res) {
+  
+// Use fs.readFile() method to read the file
+fs.readFile('file1.txt', 'utf8', function(err, data){
+      
+    /*if (err){
+
+        res.writeHead(404, {'Content-Type': 'text/html'});
+        
+  
+        return res.end("404 Not Found");
+  
+      }*/
+    // Display the file content
+    if(err) return console.error(err);
+    
+    
+    console.log(data);
+
+});
+  
+console.log('readFile called');
+
+
+
+//second solution
+
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
+
+http.createServer(function (req, res) {
+  var q = url.parse(req.url, true);
+  var filename = "." + q.pathname;
+
+  fs.readFile(filename, function(err, data) {
+    if (err) {
+      res.writeHead(404, {'Content-Type': 'text/html'});
+      return res.end("404 Not Found");
+    } 
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
+}).listen(8080);

@@ -1,0 +1,207 @@
+1)
+
+// Command interface
+interface Command {
+    void execute();
+    void undo();
+}
+
+// Receiver
+class CeilingFan {
+    private boolean isOn;
+
+    public void turnOn() {
+        isOn = true;
+        System.out.println("Ceiling fan is ON");
+    }
+
+    public void turnOff() {
+        isOn = false;
+        System.out.println("Ceiling fan is OFF");
+    }
+
+    public boolean isOn() {
+        return isOn;
+    }
+}
+
+// Concrete Commands
+class FanOnCommand implements Command {
+    private CeilingFan ceilingFan;
+
+    public FanOnCommand(CeilingFan ceilingFan) {
+        this.ceilingFan = ceilingFan;
+    }
+
+    @Override
+    public void execute() {
+        ceilingFan.turnOn();
+    }
+
+    @Override
+    public void undo() {
+        ceilingFan.turnOff();
+    }
+}
+
+class FanOffCommand implements Command {
+    private CeilingFan ceilingFan;
+
+    public FanOffCommand(CeilingFan ceilingFan) {
+        this.ceilingFan = ceilingFan;
+    }
+
+    @Override
+    public void execute() {
+        ceilingFan.turnOff();
+    }
+
+    @Override
+    public void undo() {
+        ceilingFan.turnOn();
+    }
+}
+
+// Invoker with undo functionality
+class RemoteControlWithUndo {
+    private Command command;
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
+    public void pressButton() {
+        command.execute();
+    }
+
+    public void pressUndoButton() {
+        command.undo();
+    }
+}
+
+// Client code
+public class UndoCommandExample {
+    public static void main(String[] args) {
+        CeilingFan ceilingFan = new CeilingFan();
+        Command fanOnCommand = new FanOnCommand(ceilingFan);
+
+        RemoteControlWithUndo remoteControl = new RemoteControlWithUndo();
+        remoteControl.setCommand(fanOnCommand);
+
+        remoteControl.pressButton();
+        remoteControl.pressUndoButton();
+    }
+}
+
+
+2)
+
+#Naive Bayes
+import pandas as pd
+df=pd.read_csv("Titanic-Dataset.csv")
+df.head(1)
+df=df.drop(['PassengerId','Name','SibSp','Parch','Embarked','Cabin','Ticket'], axis='columns')
+df.head()
+from sklearn.preprocessing import LabelEncoder
+label = LabelEncoder()
+df['Gender'] = label.fit_transform(df['Gender'])
+df.head()
+input=df.drop(['Survived'],axis='columns')
+input.head()
+target=df['Survived']
+target.head()
+input.columns[input.isna().any()]
+input
+input.Age = input.Age.fillna(input.Age.mean())
+input
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(input,target,test_size=0.2)
+len(y_test)
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+model.fit(x_train,y_train)
+model.score(x_test,y_test)
+x_test[:10]
+y_test[:10]
+model.predict(x_test[:10])
+
+3)
+
+const http = require('http');
+const formidable = require('formidable');
+const fs = require('fs');
+const path = require('path');
+
+const server = http.createServer((req, res) => {
+    if (req.method.toLowerCase() === 'post') {
+        // Handle file upload
+        const form = new formidable.IncomingForm();
+
+        // Set the upload directory
+        form.uploadDir = path.join(__dirname, 'uploads');
+
+        // Parse the form data
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal Server Error');
+                return;
+            }
+
+            const oldPath = files.upload.path;
+            const newPath = path.join(form.uploadDir, files.upload.name);
+
+            // Move the uploaded file to the designated directory
+            fs.rename(oldPath, newPath, (err) => {
+                if (err) {
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    res.end('Internal Server Error');
+                } else {
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    res.write('<h1>File Upload Successful</h1>');
+                    res.write(`<p>Original File Name: ${files.upload.name}</p>`);
+                    res.write(`<p>File Size: ${files.upload.size} bytes</p>`);
+                    res.end();
+                }
+            });
+        });
+        return;
+    }
+
+    // Serve the HTML form for GET requests
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.write(`
+        <html>
+        <head>
+            <title>File Upload Form</title>
+        </head>
+        <body>
+            <h1>File Upload Form</h1>
+            <form action="/" method="post" enctype="multipart/form-data">
+                <input type="file" name="upload">
+                <br><br>
+                <input type="submit" value="Upload">
+            </form>
+        </body>
+        </html>
+    `);
+    res.end();
+});
+
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}/`);
+});
+
+
+//second solution
+
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write('<form action="fileupload" method="post" enctype="multipart/form-data">');
+  res.write('<input type="file" name="filetoupload"><br>');
+  res.write('<input type="submit">');
+  res.write('</form>');
+  return res.end();
+}).listen(8080);

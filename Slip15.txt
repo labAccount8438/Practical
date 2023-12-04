@@ -1,0 +1,130 @@
+1)
+
+// Subsystem - Amplifier
+class Amplifier {
+    void on() {
+        System.out.println("Amplifier is ON");
+    }
+
+    void off() {
+        System.out.println("Amplifier is OFF");
+    }
+}
+
+// Subsystem - DVDPlayer
+class DVDPlayer {
+    void play(String movie) {
+        System.out.println("Playing DVD: " + movie);
+    }
+
+    void stop() {
+        System.out.println("DVD Player stopped");
+    }
+}
+
+// Subsystem - Projector
+class Projector {
+    void on() {
+        System.out.println("Projector is ON");
+    }
+
+    void off() {
+        System.out.println("Projector is OFF");
+    }
+}
+
+// Subsystem - Lights
+class Lights {
+    void dim(int level) {
+        System.out.println("Lights dimmed to level " + level);
+    }
+
+    void on() {
+        System.out.println("Lights are ON");
+    }
+}
+
+// Facade - HomeTheaterFacade
+class HomeTheaterFacade {
+    private Amplifier amplifier;
+    private DVDPlayer dvdPlayer;
+    private Projector projector;
+    private Lights lights;
+
+    public HomeTheaterFacade(Amplifier amplifier, DVDPlayer dvdPlayer, Projector projector, Lights lights) {
+        this.amplifier = amplifier;
+        this.dvdPlayer = dvdPlayer;
+        this.projector = projector;
+        this.lights = lights;
+    }
+
+    // Method to start the home theater system
+    public void watchMovie(String movie) {
+        System.out.println("Get ready to watch a movie...");
+
+        // Subsystem operations
+        amplifier.on();
+        dvdPlayer.play(movie);
+        lights.dim(50);
+        projector.on();
+    }
+
+    // Method to stop the home theater system
+    public void endMovie() {
+        System.out.println("Shutting down the home theater...");
+
+        // Subsystem operations
+        amplifier.off();
+        dvdPlayer.stop();
+        lights.on();
+        projector.off();
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        // Create subsystem components
+        Amplifier amplifier = new Amplifier();
+        DVDPlayer dvdPlayer = new DVDPlayer();
+        Projector projector = new Projector();
+        Lights lights = new Lights();
+
+        // Create a facade for the home theater
+        HomeTheaterFacade homeTheaterFacade = new HomeTheaterFacade(amplifier, dvdPlayer, projector, lights);
+
+        // Use the facade to start and end the movie
+        homeTheaterFacade.watchMovie("Inception");
+        System.out.println("\nMovie watching complete!\n");
+        homeTheaterFacade.endMovie();
+    }
+}
+
+
+2)
+
+from sklearn.preprocessing import LabelEncoder
+import pandas as pd
+df = pd.read_csv("forestfires.csv")
+df.sample(5)
+label_encoder = LabelEncoder()
+df["Numneric_month"] = label_encoder.fit_transform(df["month"])
+df["Numneric_day"] = label_encoder.fit_transform(df["day"])
+df.sample(5)
+df.to_csv('encoded_dataset.csv', index=False)
+df
+
+3)
+
+module.exports.dt= new Date();
+
+date.js -
+var http = require('http');
+var dt = require('./Modules');
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write("The date and time are currently: " + dt.myDateTime());
+  res.end();
+}).listen(8080);
+

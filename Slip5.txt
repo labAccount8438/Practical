@@ -1,0 +1,80 @@
+1)
+
+import java.util.Enumeration;
+import java.util.Iterator;
+
+// Adapter interface
+interface IteratorAdapter<T> extends Iterator<T> {
+}
+
+// Concrete Adapter class
+class EnumerationAdapter<T> implements IteratorAdapter<T> {
+    private Enumeration<T> enumeration;
+
+    public EnumerationAdapter(Enumeration<T> enumeration) {
+        this.enumeration = enumeration;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return enumeration.hasMoreElements();
+    }
+
+    @Override
+    public T next() {
+        return enumeration.nextElement();
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("remove() is not supported for Enumeration");
+    }
+}
+
+// Client code
+public class AdapterPatternExample {
+    public static void main(String[] args) {
+        // Create an Enumeration (for example, Vector's elements())
+        java.util.Vector<String> vector = new java.util.Vector<>();
+        vector.add("One");
+        vector.add("Two");
+        vector.add("Three");
+        Enumeration<String> enumeration = vector.elements();
+
+        // Use the Adapter to iterate over the Enumeration using an Iterator
+        IteratorAdapter<String> iteratorAdapter = new EnumerationAdapter<>(enumeration);
+
+        // Iterate and print elements
+        while (iteratorAdapter.hasNext()) {
+            System.out.println(iteratorAdapter.next());
+        }
+    }
+}
+
+
+2)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+ps=pd.read_csv("Housing.csv")
+ps.sample(10)
+df = ps[['area','bedrooms','bathrooms','stories','price']]
+df.sample(5)
+model=linear_model.LinearRegression()
+model.fit(df.drop('price',axis='columns'),df.price)
+model.predict([[3000,1,2,2]])
+
+3)
+
+var fs = require('fs');
+console.log("\nFile Contents of file before append:");
+var a = fs.readFileSync("file1.txt", "utf8");
+fs.appendFile("file2.txt", a, function(err){
+    if (err)
+        console.log(err);
+    else {
+        console.log("\nFile Contents of file after append:",
+        fs.readFileSync("file2.txt", "utf8"));
+    }
+});

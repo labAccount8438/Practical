@@ -1,0 +1,290 @@
+Q1 Write a Java Program to implement command pattern to test Remote Control.
+public interface Command {
+	public void execute();
+	public void undo();
+}
+public class CeilingFanOffCommand implements Command {
+	CeilingFan ceilingFan;
+	int prevSpeed;
+
+	public CeilingFanOffCommand(CeilingFan ceilingFan) {
+		this.ceilingFan = ceilingFan;
+	}
+
+	public void execute() {
+		prevSpeed = ceilingFan.getSpeed();
+		ceilingFan.off();
+	}
+
+	public void undo() {
+		if (prevSpeed == CeilingFan.HIGH) {
+			ceilingFan.high();
+		} else if (prevSpeed == CeilingFan.MEDIUM) {
+			ceilingFan.medium();
+		} else if (prevSpeed == CeilingFan.LOW) {
+			ceilingFan.low();
+		} else if (prevSpeed == CeilingFan.OFF) {
+			ceilingFan.off();
+		}
+	}
+}
+
+	public class CeilingFanMediumCommand implements Command {
+	CeilingFan ceilingFan;
+	int prevSpeed;
+
+	public CeilingFanMediumCommand(CeilingFan ceilingFan) {
+		this.ceilingFan = ceilingFan;
+	}
+
+	public void execute() {
+		prevSpeed = ceilingFan.getSpeed();
+		ceilingFan.medium();
+	}
+
+	public void undo() {
+		if (prevSpeed == CeilingFan.HIGH) {
+			ceilingFan.high();
+		} else if (prevSpeed == CeilingFan.MEDIUM) {
+			ceilingFan.medium();
+		} else if (prevSpeed == CeilingFan.LOW) {
+			ceilingFan.low();
+		} else if (prevSpeed == CeilingFan.OFF) {
+			ceilingFan.off();
+		}
+	}
+}
+
+public class CeilingFanHighCommand implements Command {
+	CeilingFan ceilingFan;
+	int prevSpeed;
+
+	public CeilingFanHighCommand(CeilingFan ceilingFan) {
+		this.ceilingFan = ceilingFan;
+	}
+
+	public void execute() {
+		prevSpeed = ceilingFan.getSpeed();
+		ceilingFan.high();
+	}
+
+	public void undo() {
+		if (prevSpeed == CeilingFan.HIGH) {
+			ceilingFan.high();
+		} else if (prevSpeed == CeilingFan.MEDIUM) {
+			ceilingFan.medium();
+		} else if (prevSpeed == CeilingFan.LOW) {
+			ceilingFan.low();
+		} else if (prevSpeed == CeilingFan.OFF) {
+			ceilingFan.off();
+		}
+	}
+}
+
+public class CeilingFanLowCommand implements Command {
+	CeilingFan ceilingFan;
+	int prevSpeed;
+
+	public CeilingFanLowCommand(CeilingFan ceilingFan) {
+		this.ceilingFan = ceilingFan;
+	}
+
+	public void execute() {
+		prevSpeed = ceilingFan.getSpeed();
+		ceilingFan.low();
+	}
+
+	public void undo() {
+		if (prevSpeed == CeilingFan.HIGH) {
+			ceilingFan.high();
+		} else if (prevSpeed == CeilingFan.MEDIUM) {
+			ceilingFan.medium();
+		} else if (prevSpeed == CeilingFan.LOW) {
+			ceilingFan.low();
+		} else if (prevSpeed == CeilingFan.OFF) {
+			ceilingFan.off();
+		}
+	}
+}
+public class CeilingFan {
+	public static final int HIGH = 3;
+	public static final int MEDIUM = 2;
+	public static final int LOW = 1;
+	public static final int OFF = 0;
+	String location;
+	int speed;
+
+	public CeilingFan(String location) {
+		this.location = location;
+		speed = OFF;
+	}
+
+	public void high() {
+		speed = HIGH;
+		System.out.println(location + " ceiling fan is on high");
+	} 
+
+	public void medium() {
+		speed = MEDIUM;
+		System.out.println(location + " ceiling fan is on medium");
+	}
+
+	public void low() {
+		speed = LOW;
+		System.out.println(location + " ceiling fan is on low");
+	}
+
+	public void off() {
+		speed = OFF;
+		System.out.println(location + " ceiling fan is off");
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+}
+
+2) Write a python program to implement Linear SVM.
+import pandas as pd
+df = pd.read_csv('data.csv')
+df.sample(5)
+
+from sklearn.preprocessing import LabelEncoder
+label = LabelEncoder()
+df['Species_num'] = label.fit_transform(df['Species'])
+df.sample(5)
+
+df0=df[df.Species_num==0]
+df1=df[df.Species_num==1]
+df2=df[df.Species_num==2]
+
+from matplotlib import pyplot as plt
+plt.scatter(df0['SepalLengthCm'],df0['SepalWidthCm'],color='green',marker='+')
+plt.scatter(df1['SepalLengthCm'],df1['SepalWidthCm'],color='red',marker='+')
+
+input = df.drop(['Species','Species_num'],axis='columns')
+input.sample(5)
+target = df['Species_num']
+target.sample(5)
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(input,target,test_size=0.2)
+len(y_test)
+from sklearn.svm import SVC
+model = SVC(kernel='linear')
+model.fit(x_train,y_train)
+model.score(x_test,y_test)
+x_test[:10]
+y_test[:10]
+model.predict(x_test[:10])
+3) Design a Django application: A public site in which user can pick their favourite 
+	programming language and vote.   	
+#myapp/admin.py
+from django.contrib import admin
+
+from .models import ProgrammingLanguage, Vote
+
+admin.site.register(ProgrammingLanguage)
+admin.site.register(Vote)
+
+#myapp/forms.py
+from django import forms
+from .models import ProgrammingLanguage
+
+class VoteForm(forms.ModelForm):
+    class Meta:
+        model = ProgrammingLanguage
+        fields = ['name']
+        labels = {
+            'name': 'Number',  # Change the label for the 'name' field to 'Number'
+        }
+
+#myapp/models.py
+from django.db import models
+
+class ProgrammingLanguage(models.Model):
+    name = models.CharField(max_length=100)
+
+class Vote(models.Model):
+    language = models.ForeignKey(ProgrammingLanguage, on_delete=models.CASCADE)
+
+#myapp/urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('vote/', views.vote, name='vote'),
+    path('results/', views.results, name='results'),
+]
+
+
+#myapp/views.py
+from django.shortcuts import render, redirect
+from .models import ProgrammingLanguage, Vote
+from .forms import VoteForm
+
+def vote(request):
+    if request.method == 'POST':
+        form = VoteForm(request.POST)
+        if form.is_valid():
+            language_id = form.cleaned_data['name']
+            programming_language = ProgrammingLanguage.objects.get(pk=language_id)
+            Vote.objects.create(language=programming_language)
+            return redirect('results')
+    else:
+        form = VoteForm()
+
+    return render(request, 'myapp/vote.html', {'form': form})
+
+def results(request):
+    languages = ProgrammingLanguage.objects.all()
+    return render(request, 'myapp/results.html', {'languages': languages})
+
+
+#myproject/urls.py
+from django.contrib import admin
+from django.urls import path , include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('myapp.urls')),
+]
+
+
+
+#templates/results.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poll Results</title>
+</head>
+<body>
+    <h1>Poll Results</h1>
+    <ul>
+        {% for language in languages %}
+            <li>{{ language.name }} - Votes: {{ language.vote_set.count }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'vote' %}">Back to Voting</a>
+</body>
+</html>
+
+
+#template/vote.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vote for Your Favorite Programming Language</title>
+</head>
+<body>
+    <h1>Vote for Your Favorite Programming Language</h1>
+    <h2>1. Python </h2>
+    <h2>2. C++ </h2>
+    <h2>3. Java </h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Vote">
+    </form>
+</body>
+</html>
+

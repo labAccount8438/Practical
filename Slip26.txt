@@ -1,0 +1,161 @@
+Q1 Write a Java Program to implement Strategy Pattern for Duck Behavior. Create instance variable that holds current state of Duck  from there, we just need to handle all Flying Behaviours  and Quack Behavior.   
+Duck.Java
+public abstract class Duck {
+  FlyBehaviour flyBehaviour;
+  QuackBehaviour quackBehaviour;
+  public Duck() {
+  }
+  public abstract void display();
+  public void performFly() {
+    flyBehaviour.fly();
+  }
+
+  public void performQuack() {
+    quackBehaviour.quack();
+  }
+  public void swim() {
+    System.out.println("All ducks float, even decoys!);
+  }
+  public void setFlyBehaviour(FlyBehaviour fb) {
+    flyBehaviour = fb;
+  }
+  public void setQuackBehaviour(QuackBehaviour qb) {
+    quackBehaviour qb;
+  }
+}
+
+MallardDuck.Java
+public class MallardDuck extends Duck {
+
+  public MallardDuck() {
+    quackBehaviour = new Quack();
+    flyBehaviour = new FlyWithWings();
+  }
+  public void display() {
+    System.out.println("I'm a real Mallard duck");
+  }
+}
+
+ModelDuck.Java
+public class ModolDuck extends Duck {
+  public ModelDuck() {
+    flyBehaviour = new FlyNoWay();
+    quackBehaviour = new Quack();
+  }
+  public void display() {
+    System.out.println("I'm a model duck");
+  }
+}
+
+FlyBehaviour.Java
+public interface FlyBehaviour {
+  public void fly():
+}
+
+FlyWithWings.Java
+public class FlyWithWings implements FlyBehaviour {
+  public void fly() {
+    System.out.println("I'm flying!!");
+  }
+}
+
+FlyNoWay.Java
+public class FlyNoWay implements FlyBehaviour {
+  public void fly() {
+    System.out.printlin("I can't fly");
+  }
+}
+
+FlyRocketPowered.Java
+public class FlyRocketPowered implements FlyBehaviour {
+  public void fly() {
+    System.out.println("I'm flying with a rocket!");
+  }
+}
+
+QuackBehaviour.Java
+public interface QuackBehaviour {
+  public void quack() {
+    System.out.println("Quack");
+  }
+}
+
+Quack.Java
+public class Quack implements QuackBehaviour {
+  public void quack() {
+    System.out.println("Quack");
+  }
+}
+
+MuteQuack.Java
+public class MuteQuack implements QuackBehaviour {
+  public void quack() {
+    System.out.println("<< Silence >>");
+  }
+}
+
+Squeak.Java
+public class Squeak implements QuackBehaviour {
+  public void quack() {
+    System.out.println("Squeak");
+  }
+}
+
+MiniDuckSimulator.Java
+public class MiniDuckSimulator {
+  public static void main(String[] args) {
+    Duck mallard = new MallardDuck();
+    mallard.performQuack();
+    mallard.performFly();
+  }
+}
+
+MiniDuckSimulator.Java - Model Duck Edition
+public class MiniDuckSimulator {
+  public static void main(String[] args) {
+    Duck mallard = new MallardDuck();
+    mallard.performQuack();
+    mallard.performFly();
+
+    Duck model = new ModelDuck();
+    model.performFly();
+    model.setFlyBehaviour(new FlyRocketPowered());
+    model.performFly();
+  }
+}
+2) Write a python program to implement Multiple Linear Regression for given dataset.
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+ps=pd.read_csv("Housing.csv")
+ps.sample(10)
+df = ps[['area','bedrooms','bathrooms','stories','price']]
+df.sample(5)
+model=linear_model.LinearRegression()
+model.fit(df.drop('price',axis='columns'),df.price)
+model.predict([[3000,1,2,2]])
+
+
+3) Create a Node.js file that demonstrates create database and table in MySQL.    
+var mysql = require('mysql');  
+var con = mysql.createConnection({  
+host: "localhost",  
+user: "root",  
+password: "Root@123",
+database: "node"  
+});  
+con.connect(function(err) {  
+if (err) throw err;  
+console.log("Connected!");  
+con.query("CREATE DATABASE Noded", function (err, result) {  
+if (err) throw err;  
+console.log("Database created");  
+});  
+});  
+var sql = "CREATE TABLE customers (name VARCHAR(25), address VARCHAR(25))";
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Table created");
+});

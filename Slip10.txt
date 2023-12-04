@@ -1,0 +1,144 @@
+1)
+
+// FlyBehavior interface
+interface FlyBehavior {
+    void fly();
+}
+
+// QuackBehavior interface
+interface QuackBehavior {
+    void quack();
+}
+
+// Concrete implementation of FlyBehavior - FlyWithWings
+class FlyWithWings implements FlyBehavior {
+    @Override
+    public void fly() {
+        System.out.println("Flying with wings");
+    }
+}
+
+// Concrete implementation of FlyBehavior - FlyNoWay
+class FlyNoWay implements FlyBehavior {
+    @Override
+    public void fly() {
+        System.out.println("Cannot fly");
+    }
+}
+
+// Concrete implementation of QuackBehavior - Quack
+class Quack implements QuackBehavior {
+    @Override
+    public void quack() {
+        System.out.println("Quack");
+    }
+}
+
+// Concrete implementation of QuackBehavior - MuteQuack
+class MuteQuack implements QuackBehavior {
+    @Override
+    public void quack() {
+        System.out.println("Silent quack");
+    }
+}
+
+// Duck class
+class Duck {
+    private FlyBehavior flyBehavior;
+    private QuackBehavior quackBehavior;
+
+    // Constructor
+    public Duck(FlyBehavior flyBehavior, QuackBehavior quackBehavior) {
+        this.flyBehavior = flyBehavior;
+        this.quackBehavior = quackBehavior;
+    }
+
+    // Setters for behaviors
+    public void setFlyBehavior(FlyBehavior flyBehavior) {
+        this.flyBehavior = flyBehavior;
+    }
+
+    public void setQuackBehavior(QuackBehavior quackBehavior) {
+        this.quackBehavior = quackBehavior;
+    }
+
+    // Perform fly behavior
+    public void performFly() {
+        flyBehavior.fly();
+    }
+
+    // Perform quack behavior
+    public void performQuack() {
+        quackBehavior.quack();
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        // Create a Mallard duck with initial behaviors
+        Duck mallardDuck = new Duck(new FlyWithWings(), new Quack());
+
+        System.out.println("Mallard Duck:");
+        mallardDuck.performFly();   // Flying with wings
+        mallardDuck.performQuack(); // Quack
+
+        // Change Mallard duck's behaviors at runtime
+        mallardDuck.setFlyBehavior(new FlyNoWay());
+        mallardDuck.setQuackBehavior(new MuteQuack());
+
+        System.out.println("\nMallard Duck with updated behaviors:");
+        mallardDuck.performFly();   // Cannot fly
+        mallardDuck.performQuack(); // Silent quack
+    }
+}
+
+
+2)
+
+import matplotlib.pyplot as plt
+import pandas as pd
+iris_df = pd.read_csv('data.csv')
+iris_df
+data =iris_df[['SepalLengthCm','SepalWidthCm']].values
+target = iris_df['Species'].values
+target_name = iris_df['Species'].unique()
+target_name
+plt.figure(figsize=(8,6))
+for target_value in target_name:
+    plt.scatter(data[target == target_value,0],
+                data[target == target_value,1],
+                label=target_value)
+
+3)
+
+var mysql = require('mysql');
+var con = mysql.createConnection({
+host: "localhost",
+user: "root",
+password: "",
+database: "sam"
+});
+con.connect(function(err) {
+  if (err) throw err;
+  else{
+    console.log("Connected!");
+
+    con.query("create table students1(roll int primary key, name text, address text)",function(err){
+      if(err) throw err;
+      else{
+        con.query("insert into students1 values(111,'sam','kondhwa'),(222,'vaish','kirkitwadi'),(333,'saarth','wanawadi')",function(err){
+          if(err) throw err;
+          else{
+            console.log("data inserted!");
+            con.query("select * from students", function (err, result) {
+              if (err) throw err;
+              else
+                console.log(result);
+            });  
+          }
+        });
+      }
+    });
+  }
+});
